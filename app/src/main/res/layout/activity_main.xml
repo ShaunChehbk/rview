@@ -6,10 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recyclerVew"/>
+        android:text="Main Activity"
+        android:id="@+id/main_textView"/>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/main_button"
+        />
 
 </RelativeLayout>
