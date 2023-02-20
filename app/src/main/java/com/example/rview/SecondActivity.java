@@ -1,7 +1,10 @@
 package com.example.rview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,20 +24,35 @@ public class SecondActivity extends Activity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new Adapter(this, getList(getIntent().getExtras()));
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Toast.makeText(SecondActivity.this, "onStart() called", Toast.LENGTH_SHORT).show();
+        adapter = new Adapter(this, getList(getIntent().getExtras()));
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Toast.makeText(SecondActivity.this, "onNewIntent() called", Toast.LENGTH_SHORT).show();
+
+        adapter.setModels(getList(intent.getExtras()));
+
     }
 
     private ArrayList<Model> getList(Bundle bundle) {
         ArrayList<Model> models = new ArrayList<>();
         if (bundle != null) {
             for (String key : bundle.keySet()) {
-                models.add(new Model(bundle.get(key).toString()));
+
+                Log.i("SecondAct", key + " -> " + bundle.get(key) + ";");
+                if (bundle.get(key) != null) {
+                    models.add(new Model(bundle.get(key).toString()));
+                }
             }
         }
 

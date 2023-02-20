@@ -36,4 +36,8 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
     public int getItemCount() {
         return models.size();
     }
+
+    public void setModels(ArrayList<Model> models) {
+        this.models = models;
+    }
 }
