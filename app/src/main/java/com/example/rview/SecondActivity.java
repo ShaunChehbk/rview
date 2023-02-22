@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class SecondActivity extends Activity {
-
+    public static String TAG = "SecondActivity";
     RecyclerView recyclerView;
     Adapter adapter;
 
@@ -46,6 +46,40 @@ public class SecondActivity extends Activity {
             }
         });
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //避免返回之前的Activity页面
+        this.finish();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause()");
+
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        Log.i(TAG, "finish()");
 
     }
 
