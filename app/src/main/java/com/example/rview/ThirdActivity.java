@@ -3,6 +3,7 @@ package com.example.rview;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -35,6 +36,13 @@ public class ThirdActivity extends Activity {
         String content = intent.getExtras().get("content").toString();
         Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show();
         url.setText(content);
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.fetchAndUpdate(url.getText().toString(), "title", ThirdActivity.this, title);
+            }
+        });
     }
 
     @Override
