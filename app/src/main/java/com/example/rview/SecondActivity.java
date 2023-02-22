@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,19 @@ public class SecondActivity extends Activity {
         super.onStart();
         Toast.makeText(SecondActivity.this, "onStart() called", Toast.LENGTH_SHORT).show();
         adapter = new Adapter(this, getList(getIntent().getExtras()));
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                intent.putExtra("content", adapter.getModelAt(position).toString());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "Long press", Toast.LENGTH_SHORT).show();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
@@ -55,8 +69,6 @@ public class SecondActivity extends Activity {
                 }
             }
         }
-
-
 
         return models;
     }
