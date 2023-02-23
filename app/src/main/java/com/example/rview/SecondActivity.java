@@ -25,12 +25,6 @@ public class SecondActivity extends Activity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(SecondActivity.this, "onStart() called", Toast.LENGTH_SHORT).show();
         adapter = new Adapter(this, getList(getIntent().getExtras()));
         adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
             @Override
@@ -38,6 +32,7 @@ public class SecondActivity extends Activity {
                 Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                 intent.putExtra("content", adapter.getModelAt(position).toString());
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -46,6 +41,13 @@ public class SecondActivity extends Activity {
             }
         });
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(SecondActivity.this, "onStart() called", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -65,7 +67,7 @@ public class SecondActivity extends Activity {
     protected void onStop() {
         super.onStop();
         //避免返回之前的Activity页面
-        this.finish();
+//        this.finish();
 
     }
 
@@ -73,6 +75,13 @@ public class SecondActivity extends Activity {
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause()");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(SecondActivity.this, "Destroyed", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -87,16 +96,14 @@ public class SecondActivity extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Toast.makeText(SecondActivity.this, "onNewIntent() called", Toast.LENGTH_SHORT).show();
-
-        adapter.setModels(getList(intent.getExtras()));
-
+        adapter.addBundle(intent.getExtras());
+        adapter.notifyDataSetChanged();
     }
 
     private ArrayList<Model> getList(Bundle bundle) {
         ArrayList<Model> models = new ArrayList<>();
         if (bundle != null) {
             for (String key : bundle.keySet()) {
-
                 Log.i("SecondAct", key + " -> " + bundle.get(key) + ";");
                 if (bundle.get(key) != null) {
                     models.add(new Model(bundle.get(key).toString()));

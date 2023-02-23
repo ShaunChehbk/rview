@@ -1,6 +1,8 @@
 package com.example.rview;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,5 +65,15 @@ public class Adapter extends RecyclerView.Adapter<Holder> {
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+    public void addBundle(Bundle bundle) {
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                if (bundle.get(key) != null) {
+                    models.add(new Model(bundle.get(key).toString()));
+                }
+            }
+        }
+
     }
 }
